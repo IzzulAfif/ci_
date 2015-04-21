@@ -1,4 +1,3 @@
-
 <div class="span12">
 	<div class="widget widget-nopad">
 		<div class="widget-header"> <i class="icon-list-alt"></i>

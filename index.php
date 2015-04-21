@@ -1,5 +1,7 @@
 <?php
 
+ini_set('date.timezone', 'Asia/jakarta');
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

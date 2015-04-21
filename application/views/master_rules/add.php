@@ -8,7 +8,7 @@
 			<div class="widget-content">
 
 			<?php $config = array('class'=>'form-horizontal', 'id'=>'formAddRules'); echo form_open('rules_c/create', $config);?>
-			<!-- <div class="modal-body"> -->
+			<div class="modal-body">
 			<fieldset>
 			<div class="span6">
 				<div class="control-group">											
@@ -63,13 +63,13 @@
 									Nama
 								</th>
 								<th>
-									Pribadi
-								</th>
-								<th>
 									Tampil
 								</th>
 								<th>
 									Tambah
+								</th>
+								<th>
+									Ubah
 								</th>
 								<th>
 									Update
@@ -99,7 +99,7 @@
 			</div>
 			</form>
 
-			<!-- </div> -->
+			</div>
 		</div>
 		</div>
 	</div>
@@ -109,50 +109,38 @@
 function addRules()
 {
 	var obj = {
-			id:'',
-			modul_kode : $('#menu_id').val(),
-			name : $('#menu_id').find('option:selected').text(),
-			tampil : '1',
-			tampil_check : 'checked',
-			tambah : '1',
-			tambah_check : 'checked',
-			pribadi : '1',
-			pribadi_check : 'checked',
-			update : '1',
-			update_check : 'checked',
-			hapus : '1',
-			hapus_check : 'checked'
+		id:'',
+		modul_kode : $('#menu_id').val(),
+		name : $('#menu_id').find('option:selected').text(),
+		read : '1',
+		read_check : 'checked',
+		create : '1',
+		create_check : 'checked',
+		update : '1',
+		update_check : 'checked',
+		delete : '1',
+		delete_check : 'checked',
+		pribadi : '1',
+		pribadi_check : 'checked'
 		};
 	add_row_rules(obj);
 }
 
-var menu = '<?php echo json_encode($menu); ?>',
-	jMenu = JSON.parse(menu),
-	cmbmenu = $('#menu_id');
+var i =0;
 
 function add_row_rules(obj)
 {	
-	var attR = cmbmenu.find('option[value="'+obj.modul_kode+'"]');
-
-	if(attR.attr('disabled') === 'disabled'){
-		alert('Tidak bisa memilih '+obj.name+' lagi.')
-	}else{
-		$('#rules-table').append(
-			'<tr>' +
-			'<td><input type="hidden" name="menu_id[]" value="'+obj.modul_kode+'"/>'+obj.modul_kode+'</td>'+
-			'<td><input type="hidden" name="id[]" value="'+obj.id+'"/>'+obj.name+'</td>'+
-			'<td><input type="hidden" name="pribadi[]" value="'+obj.pribadi+'"/><input type="checkbox" onclick="click_checkbox(this,2)" '+obj.pribadi_check+'/></td>'+
-			'<td><input type="hidden" name="tampil[]" value="'+obj.tampil+'"/><input type="checkbox" onclick="click_checkbox(this,3)" '+obj.tampil_check+'/></td>'+
-			'<td><input type="hidden" name="tambah[]" value="'+obj.tambah+'"/><input type="checkbox" onclick="click_checkbox(this,4)" '+obj.tambah_check+'/></td>'+
-			'<td><input type="hidden" name="update[]" value="'+obj.update+'"/><input type="checkbox" onclick="click_checkbox(this,5)" '+obj.update_check+'/></td>'+
-			'<td><input type="hidden" name="hapus[]" value="'+obj.hapus+'"/><input type="checkbox" onclick="click_checkbox(this,6)" '+obj.hapus_check+'/></td>'+
-			'<td><a style="cursor:pointer;" class="btn btn-danger hapusRowRules" title="Hapus" onclick="deleteRules(this, '+obj.modul_kode+')"><i class="icon-trash"></i> Hapus</a></td></tr>'
-		);
-
-		cmbmenu.find('option[value="'+obj.modul_kode+'"]').attr('disabled',true);
-	}
-
-	
+	$('#rules-table').append(
+		'<tr>' +
+		'<td><input type="hidden" name="modul_kode[]" value="'+obj.modul_kode+'"/>'+obj.modul_kode+'</td>'+
+		'<td><input type="hidden" name="id[]" value="'+obj.id+'"/>'+obj.name+'</td>'+
+		'<td><input type="hidden" name="allow_read_i[]" value="'+obj.read+'"/><input type="checkbox" onclick="click_checkbox(this,2)" '+obj.read_check+'/></td>'+
+		'<td><input type="hidden" name="allow_create_i[]" value="'+obj.create+'"/><input type="checkbox" onclick="click_checkbox(this,3)" '+obj.create_check+'/></td>'+
+		'<td><input type="hidden" name="allow_update_i[]" value="'+obj.update+'"/><input type="checkbox" onclick="click_checkbox(this,4)" '+obj.update_check+'/></td>'+
+		'<td><input type="hidden" name="allow_delete_i[]" value="'+obj.delete+'"/><input type="checkbox" onclick="click_checkbox(this,5)" '+obj.delete_check+'/></td>'+
+		'<td><input type="hidden" name="pribadi_i[]" value="'+obj.pribadi+'"/><input type="checkbox" onclick="click_checkbox(this,6)" '+obj.pribadi_check+'/></td>'+
+		'<td><a style="cursor:pointer;" class="btn btn-danger" title="Hapus" id="hapusRowRules'+ i +'" onclick="deleteRules('+ i++ +')"><i class="icon-trash"></i> Hapus</a></td></tr>'
+	);
 }
 
 function click_checkbox(tr, index)
@@ -167,13 +155,11 @@ function click_checkbox(tr, index)
 	}
 }
 
-function deleteRules(val, id){
-
-	var par = $(val).closest('tr'); //tr
+function deleteRules(i){
+	var par = $('#hapusRowRules'+i).parent().parent(); //tr
 	if(confirm('Anda yakin?'))
 	{
-		par.remove();
-		cmbmenu.find('option[value="'+id+'"]').attr('disabled',false);
+	  par.remove();
 	}
 	return false;
 }; 

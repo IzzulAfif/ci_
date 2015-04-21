@@ -43,14 +43,14 @@
 									<?php echo $value->nama; ?>
 								</td>
 								<td>
-									<?php echo $value->jml_menu; ?>
+									<?php echo $value->url; ?>
 								</td>
 								<td width="20%">
-									<a class="btn" href="<?php echo base_url()."rules_c/edit/".$value->group_id;?>">
+									<a class="btn" href="<?php echo base_url()."menu_c/edit/".$value->id;?>">
 										<i class="icon-edit"></i>
 										Edit
 									</a>
-									<button class="btn btn-danger" onclick="kirimId('<?php echo $value->group_id;?>','<?php echo $value->nama;?>')" data-target="#hapusModal" role="button" data-toggle="modal">
+									<button class="btn btn-danger" onclick="kirimId('<?php echo $value->id;?>','<?php echo $value->nama;?>')" data-target="#hapusModal" role="button" data-toggle="modal">
 										<i class="icon-trash"></i>
 										Hapus
 									</button>
@@ -73,7 +73,7 @@
     		Hapus Data
     	</h3>
   	</div>
-    <div id="hapusData" style="padding: 10px">
+    <div id="hapusData">
   	
     </div>
     <div class="modal-footer">
